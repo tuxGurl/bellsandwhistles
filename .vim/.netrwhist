@@ -1,0 +1,11 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =9
+let g:netrw_dirhist_1='/home/user/CDS07/fpga3/patch/buildroot-microblaze'
+let g:netrw_dirhist_2='/home/user/.vim'
+let g:netrw_dirhist_3='/home/user/CDS07/fpga3/packages/fpga3/app/ledservice'
+let g:netrw_dirhist_4='/home/user/CDS07/fpga3/packages/fpga3/app/ledservice/ledservice_new'
+let g:netrw_dirhist_5='/home/user/CDS07/fpga3/packages/fpga3/api/tamper/test'
+let g:netrw_dirhist_6='/cygdrive/d/work/ECH02/sw/bsp/inc/win32'
+let g:netrw_dirhist_7='/cygdrive/d/work/ECH02/sw/bsp/src/win32'
+let g:netrw_dirhist_8='/cygdrive/d/work/ECH02/sw/tools'
+let g:netrw_dirhist_9='/cygdrive/d/work/ECH02/sw/bsp/test'

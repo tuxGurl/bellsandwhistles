@@ -1,4 +1,3 @@
-
 parse_svn_branch() {
     parse_svn_url | sed -e 's#^'"$(parse_svn_repository_root)"'##g' | egrep -o '(tags|branches)/[^/]+|trunk' | egrep -o '[^/]+$' | awk '{print " ("$1")" }'
 }
@@ -21,18 +20,6 @@ GREEN="\[\033[0;32m\]"
 export PROMPT_COMMAND="set_svn_prompt"
 export EDITOR=vim
 
-export SVN_ROOT="/cygdrive/e/work"
-export ECH02_SVN="${SVN_ROOT}/ECH02/sw"
-export PATH=${ECH02_SVN}/tools:$PATH
-source ${ECH02_SVN}/tools/set-env.sh
-
-#-------------------
-# Personnal Aliases
-#-------------------
-
-alias echsrc='cd ${ECH02_SVN}'
-alias worksrc='cd ${SVN_ROOT}'
-
 #-------------------------------------------------------------
 # The 'ls' family (this assumes you use a recent GNU ls)
 #-------------------------------------------------------------
@@ -52,5 +39,5 @@ alias tree='tree -Csu'     # nice alternative to 'recursive ls'
 # function ll(){ ls -l "$@"| egrep "^d" ; ls -lXB "$@" 2>&-| \
 #                egrep -v "^d|total "; }
 
-# This is required by the Win32 MinGW executable
-export PATH=/usr/i686-w64-mingw32/sys-root/mingw/bin:$PATH
+source .cygwin
+source .aliases

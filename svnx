@@ -1,0 +1,132 @@
+#!/bin/bash
+
+# Return with error if any svn commands fail
+set -e
+
+# Determine SVN repository root path
+ROOT_PATH=`svn info | grep 'Root Path' | cut -d ' ' -f 5`
+
+# Trunk for SVN checkout starts here
+TRUNK=trunk/ext/sw
+
+svnbranch=$0
+command=$1
+branch=$2
+
+assert_not_empty()
+{
+    if [[ "$2" == "" ]]; then
+        echo $1
+        exit 1
+    fi
+}
+
+assert_no_branch()
+{
+    if svn info ^/$1 &> /dev/null; then
+        echo "Branch ${branch} already exists!"
+        exit 1
+    fi
+}
+
+assert_branch()
+{
+    if ! svn info ^/$1 &> /dev/null; then
+        echo "Branch ${branch} doesn't exist!"
+        exit 1
+    fi
+}
+
+assert_clean_working_copy()
+{
+    if [[ ! -z $(${svnbranch} status) ]]; then
+        echo "You have local modifications in your working copy!"
+        exit 1
+    fi
+}
+
+show_usage()
+{
+    echo "Usage: $0 <command> [<branch>]"
+    echo 'Where <command> is one of'
+    echo ' list         list branches'
+    echo ' delete       delete <branch>'
+    echo ' fork         create new <branch> from working copy'
+    echo ' switch       change working copy to <branch>'
+    echo ' sync         merge changes from trunk (or <branch>) into working copy'
+    echo ' integrate    promote changes from <branch> into working copy'
+    echo ' status       status of entire working copy'
+    echo ' update       update entire working copy'
+    echo ' commit       commit changes to entire working copy'
+    echo ' review       upload changes on <branch> to CodeCollaborator for review'
+}
+
+case ${command} in
+list|ls)
+    svn ls ^/branches
+    ;;
+fork)
+    assert_not_empty "You must specify a branch name" ${branch}
+    assert_no_branch branches/${branch}
+    assert_clean_working_copy
+    message="Fork branch ${branch}"
+    svn cp -m "${message}" ${ROOT_PATH} ^/branches/${branch}
+    svn switch ^/branches/${branch} ${ROOT_PATH}
+    ;;
+switch)
+    assert_not_empty "You must specify a branch name" ${branch}
+    assert_clean_working_copy
+    if [[ "${branch}" == "trunk" ]]; then
+        svn switch ^/${TRUNK} ${ROOT_PATH}
+    else
+        assert_branch branches/${branch}
+        svn switch ^/branches/${branch} ${ROOT_PATH}
+    fi
+    ;;
+sync)
+    assert_clean_working_copy
+    if [[ "${branch}" == "" ]]; then
+        branch=${TRUNK}
+    else
+        branch=branches/${branch}
+    fi
+    svn merge ^/${branch} ${ROOT_PATH}
+    ;;
+diff)
+    assert_not_empty "You must specify a branch name" ${branch}
+    assert_branch branches/${branch}
+    svn diff ^/${TRUNK} ^/branches/${branch}
+    ;;
+integrate|int)
+    assert_not_empty "You must specify a branch name" ${branch}
+    assert_branch branches/${branch}
+    assert_clean_working_copy
+    svn merge --reintegrate ^/branches/${branch} ${ROOT_PATH}
+    ;;
+delete|del)
+    assert_not_empty "You must specify a branch name" ${branch}
+    assert_branch branches/${branch}
+    svn delete -m "Delete branch branches/${branch}" ^/branches/${branch}
+    ;;
+status|st)
+    svn status ${ROOT_PATH}
+    ;;
+commit|ci)
+    svn commit ${ROOT_PATH}
+    ;;
+update|up)
+    svn update ${ROOT_PATH}
+    ;;
+review|rv)
+    assert_not_empty "You must specify a branch to review" ${branch}
+    assert_branch branches/${branch}
+    ccollab addsvndiffs new ^/trunk/ext/sw ^/branches/${branch}
+    ;;
+help)
+    show_usage
+    ;;
+*)
+    echo 
+    show_usage
+    exit 1
+esac

@@ -1,0 +1,8 @@
+﻿#!/bin/bash
+
+if uname | grep -iq CYGWIN; then
+    exit 0;
+fi
+
+# This is required by the Win32 MinGW executable
+export PATH=/usr/i686-w64-mingw32/sys-root/mingw/bin:$PATH

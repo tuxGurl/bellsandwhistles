@@ -1,0 +1,17 @@
+#-------------------
+# Personnal Aliases
+#-------------------
+
+export SVN_ROOT="/cygdrive/e/work"
+export ECH02_SVN="${SVN_ROOT}/ECH02/sw"
+
+export PATH=${ECH02_SVN}/tools:$PATH
+source ${ECH02_SVN}/tools/set-env.sh
+
+export AGT01_SVN="/home/user/AGT01/sw"
+
+alias agtsrc='cd ${AGT01_SVN}'
+alias echsrc='cd ${ECH02_SVN}'
+alias worksrc='cd ${SVN_ROOT}'
+
+

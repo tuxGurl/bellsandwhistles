@@ -6,24 +6,25 @@
 export EDITOR=vim
 
 # Aliases
-if [ -f ~/.bash_alias ]; then
-    . ~/.bash_alias
+if [ -f ~/bellsandwhistles/.bash_alias ]; then
+    . ~/bellsandwhistles/.bash_alias
 fi
 
 # Project Specific
-if [ -f ~/.bash_prj ]; then
-    . ~/.bash_prj
+if [ -f ~/bellsandwhistles/.bash_prj ]; then
+    . ~/bellsandwhistles/.bash_prj
 fi
 
 #Show SVN details in prompt
-if [ -f ~/.bash_svn ]; then
-    . ~/.bash_svn
+if [ -f ~/bellsandwhistles/.bash_svn ]; then
+    . ~/bellsandwhistles/.bash_svn
 fi
 
 # Svn Tools
-export PATH=~svnx.sh:$PATH
+export PATH=~/bellsandwhistles/:$PATH
 
-if [ -f ~/.cygwin ]; then
-    . ~/.cygwin
+if [ -f ~/bellsandwhistles/.cygwin ]; then
+    . ~/bellsandwhistles/.cygwin
 fi
+
 

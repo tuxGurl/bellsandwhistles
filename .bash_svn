@@ -12,7 +12,7 @@ parse_svn_repository_root() {
     svn info 2>/dev/null | sed -ne 's#^Repository Root: ##p'
 }
 set_svn_prompt() {
-    PS1="$BLACK[\u@$RED\h $GREEN\w$RED_BOLD$(parse_svn_branch)$BLACK]\n> "
+    PS1="$BLACK[\u@$RED\h $GREEN\w$RED_BOLD$(parse_svn_branch)$BLACK]$ "
 }
 
 BLACK="\[\033[0;38m\]"

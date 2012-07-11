@@ -13,6 +13,6 @@ else
     export SVN_ROOT="/cygdrive/e/work"
 fi
 
-export PRJ_ROOT="${SVN_ROOT}/{PRJ_NAME}"
+export PRJ_ROOT="${SVN_ROOT}/${PRJ_NAME}"
 
 alias prjsrc='cd ${PRJ_ROOT}'

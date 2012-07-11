@@ -8,9 +8,9 @@ export PRJ_NAME="ECH02"
 
 # Is this Cygwin or Linux
 if uname | grep -iq CYGWIN; then
-    export SVN_ROOT="/home/user"    
-else
     export SVN_ROOT="/cygdrive/e/work"
+else
+    export SVN_ROOT="/home/user"    
 fi
 
 export PRJ_ROOT="${SVN_ROOT}/${PRJ_NAME}"

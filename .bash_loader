@@ -21,10 +21,10 @@ if [ -f ~/bellsandwhistles/.bash_svn ]; then
 fi
 
 # Svn Tools
-export PATH=~/bellsandwhistles/:$PATH
+export PATH=/home/user/bellsandwhistles/tools:$PATH
 
-if [ -f ~/bellsandwhistles/.cygwin ]; then
-    . ~/bellsandwhistles/.cygwin
-fi
+#if [ -f ~/bellsandwhistles/.cygwin ]; then
+#    . ~/bellsandwhistles/.cygwin
+#fi
 
 
